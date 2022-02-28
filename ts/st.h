@@ -27,8 +27,6 @@ uint16_t to_date(int, int, int);
 
 int is_month(char* );
 
-char* month_n(char* );
-
 void init_data(void );
 
 int read_data(char* );

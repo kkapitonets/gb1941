@@ -43,18 +43,6 @@ int is_month(char* sm) {
 	return 0;
 }
 
-char* month_n(char* sm) {
-
-	int im;
-	
-	sscanf(sm, "%d", &im);
-	
-	if (im >0 && im <13) 
-		return month_s[im-1];
-
-	return month_s[12];// N/A
-}
-
 void init_data(void) {
 
 	for (int i=0;i<OUTSIZE;i++) {
