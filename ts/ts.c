@@ -9,10 +9,6 @@ extern char month_s[OUTSIZE][MSIZE];
 
 int main(int argc, char *argv[]) {
 	
-	//struct st a1;
-	
-	//a1.date=to_date(2, 27, 23);
-	
 	if (argc==3 && argv[1][1]=='f') {
 		if(read_data(argv[2])!=-1) {
 			operate_data();
