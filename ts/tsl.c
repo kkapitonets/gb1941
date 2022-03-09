@@ -24,7 +24,7 @@ int ml[12]={31,28,31,30,31,30,31,31,30,31,30,31};//MONTH LENGHT
 
 char *fn;//FILE NAME
 
-int ui=0, pt=0, h1=0, h2=23, st=0, im=0, lf=0, qt=0, yr=0, hl=0, pd=0;//USER INTERFACE, PERIOD TYPE, HOUR FROM, HOUR TO, STATISTIC TYPE, MONTH NUMBER, LOAD FILE, QUIT, YEAR STATISTIC (USER INTERFACE), PRINT HOUR DATA
+int ui=0, pt=0, h1=0, h2=23, im=0, lf=0, qt=0, yr=0, hl=0, pd=0;//USER INTERFACE, PERIOD TYPE, HOUR FROM, HOUR TO, MONTH NUMBER, LOAD FILE, QUIT, YEAR STATISTIC (USER INTERFACE), PRINT HOUR DATA
 
 char pt_name[6][16]={"Middle Day","Middle Midnight","Middle Midday","Middle Sunrise","Middle Sunset","Middle by time"};
 
@@ -73,7 +73,6 @@ void init_statistic(void) {//INIT DATA
 	pt=0;	//PERIOD TYPE
 	h1=0;	//HOUR FROM  
 	h2=23;	//HOUR TO
-	st=0;	//STATISTIC TYPE
 	im=0;	//MONTH NUMBER
 	lf=0;	//LOAD FILE
 	yr=0;	//YEAR STATICTIC (USER INTERFACE)
@@ -268,35 +267,35 @@ void operate_statistic(void) {//OPERATE AND PRINT DATA
 			
 			dt = dm(mn, dy)-1;
 			
-			if (st == 0) {//DAY
+			if (pt == 0) {//DAY
 				add_statistic(&month_data[mn-1],t);
 				add_statistic(&year_data,t);
 			}
-			else if (st == 1) {//MIDNIGHT	
+			else if (pt == 1) {//MIDNIGHT	
 				if (hr>ss[dt] || hr<sr[dt]) {
 					add_statistic(&month_data[mn-1],t);
 					add_statistic(&year_data,t);
 				}	
 			}
-			else if (st == 2) {//SUNRISE	
+			else if (pt == 2) {//SUNRISE	
 				if (hr>sr[dt]-2 && hr<sr[dt]+3) {
 					add_statistic(&month_data[mn-1],t);
 					add_statistic(&year_data,t);
 				}	
 			}
-			else if (st == 3) {//SUNSET	
+			else if (pt == 3) {//SUNSET	
 				if (hr>ss[dt]-3 && hr<ss[dt]+2) {
 					add_statistic(&month_data[mn-1],t);
 					add_statistic(&year_data,t);
 				}	
 			}
-			else if (st == 4) {//MIDDAY	
+			else if (pt == 4) {//MIDDAY	
 				if (hr>sr[dt]-1 && hr<ss[dt]+1) {
 					add_statistic(&month_data[mn-1],t);
 					add_statistic(&year_data,t);
 				}	
 			}
-			else if (st == 5) {//BY TIME
+			else if (pt == 5) {//BY TIME
 				if (hr>h1-1 && hr<h2+1) {
 					add_statistic(&month_data[mn-1],t);
 					add_statistic(&year_data,t);
@@ -551,9 +550,13 @@ void operate(void) {//OPERATE DATA
 	}	
 	
 	if (ui) {
-		user_interface();	
+		user_interface();
 	}
-
+	
+	if (qt) {
+		free(hour_data);
+	}	
+	
 }
 
 //-----
@@ -599,7 +602,7 @@ void user_interface(void) {//USER INTERFACE
 				printf("\t MN\t Midnight (from sunset to sunrise)\n");
 				printf("\t MD\t Midday (from sunrise to sunset)\n");
 				printf("\t SR\t Sunrise (from hour before sunrise two hours after sunrise)\n");
-				printf("\t SS\t Sunset (from two hour befor sunset hour after sunset)\nn");
+				printf("\t SS\t Sunset (from two hour befor sunset hour after sunset)\n");
 				printf("-p BEGIN END\n\t specific period (from BEGIN hour to END hour)\n");
 				printf("-m MONTH\n\t month statistic (other way year statistic)\n");
 				printf("\t MONTH\t month number\n");
